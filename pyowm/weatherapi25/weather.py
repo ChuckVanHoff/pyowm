@@ -76,7 +76,7 @@ class Weather(object):
         self._rain = rain
         self._snow = snow
         self._wind = wind
-        if humidity < 0:
+        if humidity < 0 and not allow_raw:
             raise ValueError("'humidity' must be greatear than 0")
         self._humidity = humidity
         self._pressure = pressure
@@ -85,14 +85,14 @@ class Weather(object):
         self._detailed_status = detailed_status
         self._weather_code = weather_code
         self._weather_icon_name = weather_icon_name
-        if visibility_distance is not None and visibility_distance < 0:
+        if visibility_distance is not None and visibility_distance < 0 and not allow_raw:
             raise ValueError("'visibility_distance' must be greater than 0")
         self._visibility_distance = visibility_distance
         self._dewpoint = dewpoint
-        if humidex is not None and humidex < 0:
+        if humidex is not None and humidex < 0 and not allow_raw:
             raise ValueError("'humidex' must be greater than 0")
         self._humidex = humidex
-        if heat_index is not None and heat_index < 0:
+        if heat_index is not None and heat_index < 0 and not allow_raw:
             raise ValueError("'heat index' must be grater than 0")
         self._heat_index = heat_index
 
