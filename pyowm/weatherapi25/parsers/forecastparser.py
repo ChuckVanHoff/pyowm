@@ -22,7 +22,7 @@ class ForecastParser(jsonparser.JSONParser):
     def __init__(self):
         pass
 
-    def parse_JSON(self, JSON_string):
+    def parse_JSON(self, JSON_string, allow_raw=False):
         """
         Parses a *Forecast* instance out of raw JSON data. Only certain
         properties of the data are used: if these properties are not found or
@@ -62,7 +62,7 @@ class ForecastParser(jsonparser.JSONParser):
         else:
             if 'list' in d:
                 try:
-                    weathers = [weather.weather_from_dictionary(item) \
+                    weathers = [weather.weather_from_dictionary(item, allow_raw) \
                                 for item in d['list']]
                 except KeyError:
                     raise parse_response_error.ParseResponseError(

@@ -572,7 +572,7 @@ class OWM25(owm.OWM):
         else:
             return None
 
-    def three_hours_forecast_at_coords(self, lat, lon):
+    def three_hours_forecast_at_coords(self, lat, lon, allow_raw=False):
         """
         Queries the OWM Weather API for three hours weather forecast for the
         specified geographic coordinate (eg: latitude: 51.5073509,
@@ -599,7 +599,7 @@ class OWM25(owm.OWM):
                                             self._subscription_type,
                                             self._use_ssl)
         _, json_data = self._wapi.cacheable_get_json(uri, params=params)
-        forecast = self._parsers['forecast'].parse_JSON(json_data)
+        forecast = self._parsers['forecast'].parse_JSON(json_data, allow_raw)
         if forecast is not None:
             forecast.set_interval("3h")
             return forecaster.Forecaster(forecast)

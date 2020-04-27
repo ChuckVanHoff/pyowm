@@ -60,7 +60,7 @@ class Weather(object):
     def __init__(self, reference_time, sunset_time, sunrise_time, clouds, rain,
                  snow, wind, humidity, pressure, temperature, status,
                  detailed_status, weather_code, weather_icon_name,
-                 visibility_distance, dewpoint, humidex, heat_index):
+                 visibility_distance, dewpoint, humidex, heat_index, allow_raw=False):
         if reference_time < 0:
             raise ValueError("'reference_time' must be greater than 0")
         self._reference_time = reference_time
@@ -70,7 +70,7 @@ class Weather(object):
         if sunrise_time < 0:
             sunrise_time = None
         self._sunrise_time = sunrise_time
-        if clouds < 0:
+        if clouds < 0 and not allow_raw:
             raise ValueError("'clouds' must be greater than 0")
         self._clouds = clouds
         self._rain = rain
@@ -390,7 +390,7 @@ class Weather(object):
               self._status.lower(), self._detailed_status.lower())
 
 
-def weather_from_dictionary(d):
+def weather_from_dictionary(d, allow_raw=False):
     """
     Builds a *Weather* object out of a data dictionary. Only certain
     properties of the dictionary are used: if these properties are not
@@ -580,4 +580,4 @@ def weather_from_dictionary(d):
     return Weather(reference_time, sunset_time, sunrise_time, clouds,
                 rain, snow, wind, humidity, pressure, temperature,
                 status, detailed_status, weather_code, weather_icon_name,
-                visibility_distance, dewpoint, humidex, heat_index)
+                visibility_distance, dewpoint, humidex, heat_index, allow_raw)
